@@ -288,8 +288,7 @@ Then restart the server.
 
 **Course:** CS3365 — Software Engineering  
 **Institution:** Texas Tech University  
-**Semester:** Spring 2026  
-**Instructor:** *[Your Instructor's Name]*
+
 
 ---
 
