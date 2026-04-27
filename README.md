@@ -293,4 +293,4 @@ Then restart the server.
 
 ## 📄 License
 
-This project was developed for educational purposes as part of CS3365 at Texas Tech University.
+This project was developed for educational purposes as part of Software Engineering Class at Texas Tech University.
