@@ -1,0 +1,260 @@
+@startuml LPS_Class_Diagram
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam classFontSize 12
+skinparam classHeaderBackgroundColor #dce8f0
+skinparam classBackgroundColor #f9fbfd
+skinparam classBorderColor #2c5f8a
+skinparam classArrowColor #2c5f8a
+skinparam classFontColor #1a1a1a
+skinparam attributeFontColor #1a1a1a
+skinparam attributeFontSize 11
+skinparam roundCorner 8
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 70
+skinparam padding 5
+skinparam shadowing false
+skinparam backgroundColor #ffffff
+
+left to right direction
+
+' ─────────────────────────────────────────
+' ENUMS
+' ─────────────────────────────────────────
+
+together {
+    enum UserType {
+        ADMIN
+        USER
+    }
+
+    enum AccountCreationStatus {
+        SUCCESS
+        EMAIL_TAKEN
+        INVALID_DATA
+    }
+}
+
+' ─────────────────────────────────────────
+' DATA MODELS
+' ─────────────────────────────────────────
+
+together {
+    class Ticket {
+        + id : String
+        + name : String
+        + price : float
+        + desc : String
+        + imgSrc : String
+        + active : boolean
+        --
+        + fromDict(data : Map) : Ticket
+    }
+
+    class PurchasedTicket {
+        + numbers : List<Integer>
+        + winningNumbers : List<Integer>
+        + winning : boolean
+        + resolved : boolean
+        + claimed : boolean
+        + prizeAmount : float
+        + ticketType : String
+        + confirmationNumber : String
+        --
+        + fromDict(data : Map) : PurchasedTicket
+    }
+
+    class Order {
+        + id : String
+        + userEmail : String
+        + quantity : int
+        + total : float
+        + purchaseDate : String
+        --
+        + fromDict(data : Map) : Order
+    }
+
+    class User {
+        + name : String
+        + email : String
+        + phone : String
+        + address : String
+        + birthday : String
+        + sex : String
+        + last4SSN : String
+        + last4ID : String
+        + role : UserType
+        + salt : String
+        + pwHash : String
+        --
+        + isProfileComplete() : boolean
+        + fromDict(data : Map) : User
+        + asDictFactory() : Map
+    }
+}
+
+' ─────────────────────────────────────────
+' MANAGERS
+' ─────────────────────────────────────────
+
+together {
+    class UserManager {
+        + userFile : String
+        + users : List<User>
+        - resetTokens : Map<String, String>
+        --
+        + tryCreateAccount(name:String, email:String,\nphone:String, birthday:String,\npassword:String) : String
+        + authenticate(email:String, password:String) : UserType
+        + getUser(email:String) : User
+        + updateProfile(email:String, birthday:String,\naddress:String, sex:String,\nlast4SSN:String, last4ID:String) : void
+        + addOrderToUser(email:String, order:Order) : void
+        + generateResetToken(email:String) : String
+        + resetPassword(token:String, newPwd:String) : boolean
+        + isValidResetToken(token:String) : boolean
+        + save() : void
+        - load() : List<User>
+        - hashPassword(password:String, salt:String) : Map<String,String>
+    }
+
+    class TicketManager {
+        + ticketFile : String
+        + tickets : List<Ticket>
+        --
+        + listTickets() : List<Ticket>
+        + listActiveTickets() : List<Ticket>
+        + getTicket(id:String) : Ticket
+        + addTicket(data:Map) : Ticket
+        + removeTicket(id:String) : Ticket
+        + toggleTicketAvailability(id:String) : Ticket
+        + updateTicket(id:String, name:String,\nprice:float, desc:String,\nimgSrc:String) : Ticket
+        + save() : void
+        - load() : List<Ticket>
+        - initDefaultTickets() : void
+    }
+
+    class OrderManager {
+        + orderFile : String
+        + orders : List<Order>
+        --
+        + createOrder(userEmail:String,\ntickets:List<PurchasedTicket>,\ntotal:float) : Order
+        + getOrder(id:String) : Order
+        + getOrdersForUser(email:String) : List<Order>
+        + updateTicketWinStatus(orderId:String,\nticketId:String, winning:boolean,\nwinningNumbers:List<Integer>,\nprizeAmount:float) : void
+        + claimTicket(orderId:String, ticketId:String) : void
+        + getRevenueStats() : Map<String, float[]>
+        + save() : void
+        - load() : List<Order>
+    }
+}
+
+together {
+    class PaymentProcessor {
+        --
+        + processPayment(userEmail:String,\npaymentInfo:Map,\namount:float) : boolean
+    }
+
+    class EmailNotifier {
+        + logFile : String
+        + smtpConfig : Map<String, Object>
+        --
+        + sendEmail(to:String, subject:String,\nbody:String) : boolean
+        - buildHtmlEmail(subject:String,\nbody:String) : String
+        - logEmail(to:String, subject:String,\nbody:String, success:boolean) : void
+    }
+}
+
+' ─────────────────────────────────────────
+' RENDERERS
+' ─────────────────────────────────────────
+
+together {
+    class LoginRender {
+        --
+        + loginPage() : String
+        + registerPage() : String
+        + forgotPasswordPage() : String
+        + resetPasswordPage(token:String) : String
+    }
+
+    class UserRender {
+        --
+        + dashboard(user:User, ticketCount:int,\norderCount:int, winCount:int,\ntotalSpent:float) : String
+        + browseTickets(tickets:List<Ticket>) : String
+        + purchaseTickets(tickets:List<Ticket>,\nselectedId:String) : String
+        + purchaseConfirm(order:Order) : String
+        + orderHistory(orders:List<Order>) : String
+        + browseWinners(allOrders:List<Order>) : String
+        + displayTickets(orders:List<Order>) : String
+        + printTickets(orders:List<Order>) : String
+        + viewProfile(user:User, message:String,\nisError:boolean) : String
+        + editProfile(user:User, message:String,\nisError:boolean) : String
+    }
+
+    class AdminRender {
+        --
+        + systemStatus(totalSold:int,\ntotalRevenue:float,\nperTicket:Map,\ntotalUsers:int) : String
+        + manageTickets(tickets:List<Ticket>) : String
+    }
+}
+
+' ─────────────────────────────────────────
+' SERVER BACKEND
+' ─────────────────────────────────────────
+
+class ServerBackend {
+    + root : String
+    + userFile : String
+    + ticketFile : String
+    + orderFile : String
+    + emailLog : String
+    + userMan : UserManager
+    + ticketMan : TicketManager
+    + orderMan : OrderManager
+    + paymentMan : PaymentProcessor
+    + notifMan : EmailNotifier
+    + userRender : UserRender
+    + adminRender : AdminRender
+    + loginRender : LoginRender
+    --
+    + purchaseFlow(userEmail:String,\nticketId:String, quantity:int,\nchosenNumbers:List<Integer>,\npaymentInfo:Map) : Order
+    + {static} calculatePrize(matches:int,\nticketPrice:float) : float
+    - {static} buildSmtpConfig() : Map<String,Object>
+    - setupRoutes() : void
+    - decodeParam(s:String) : String
+    + {static} main(args:String[]) : void
+}
+
+' ─────────────────────────────────────────
+' RELATIONSHIPS
+' ─────────────────────────────────────────
+
+' Inheritance
+PurchasedTicket --|> Ticket
+
+' Compositions
+Order        "1"   *-- "1..10" PurchasedTicket : contains
+User         "1"   *-- "0..*"  Order            : has
+
+' Enum usage
+User        -->  UserType              : role
+UserManager ..>  AccountCreationStatus : returns
+
+' ServerBackend owns all managers and renderers
+ServerBackend *-- UserManager
+ServerBackend *-- TicketManager
+ServerBackend *-- OrderManager
+ServerBackend *-- PaymentProcessor
+ServerBackend *-- EmailNotifier
+ServerBackend *-- UserRender
+ServerBackend *-- AdminRender
+ServerBackend *-- LoginRender
+
+' Renderer dependencies
+UserRender  ..> User   : uses
+UserRender  ..> Order  : uses
+UserRender  ..> Ticket : uses
+AdminRender ..> Ticket : uses
+
+@enduml

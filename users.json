@@ -1,0 +1,121 @@
+[
+  {
+    "name": "Deo Mwala",
+    "email": "deosgracius1@gmail.com",
+    "phone": "12174174270",
+    "address": "3710 Erskine Street",
+    "sex": "Male",
+    "last4SSN": "2222",
+    "last4ID": "3333",
+    "role": "USER",
+    "salt": "2e0b1eb0abf34fccbc0ba86c52e5330b",
+    "pwHash": "e3b50183f1be8fcaec29fb74ebae1a4a1926c004540bc7c501646df132fc77e8",
+    "orders": [
+      {
+        "id": "b5cefec4-7e14-4e0d-afc2-c526b4c5a42b",
+        "userEmail": "deosgracius1@gmail.com",
+        "quantity": 1,
+        "tickets": [
+          {
+            "numbers": [
+              44,
+              33,
+              1,
+              18,
+              6
+            ],
+            "winning": false,
+            "resolved": false,
+            "claimed": false,
+            "prizeAmount": 0.0,
+            "ticketType": "Mega Millions",
+            "confirmationNumber": "1F4E7285",
+            "id": "dbae8ff7-0421-4dea-8e24-42ea4f31edc6",
+            "name": "Mega Millions",
+            "price": 2.0,
+            "desc": "Pick 5 numbers from 1-50. Drawings every Saturday. Starting jackpot of $40 million!",
+            "imgSrc": "megamillions.png",
+            "active": true
+          }
+        ],
+        "total": 2.0,
+        "purchaseDate": "2026-04-27"
+      },
+      {
+        "id": "d9cf3bec-28b2-4624-a89d-39a4974408b6",
+        "userEmail": "deosgracius1@gmail.com",
+        "quantity": 1,
+        "tickets": [
+          {
+            "numbers": [
+              16,
+              41,
+              31,
+              34,
+              11
+            ],
+            "winning": false,
+            "resolved": false,
+            "claimed": false,
+            "prizeAmount": 0.0,
+            "ticketType": "Lotto Texas",
+            "confirmationNumber": "FDB12876",
+            "id": "943e6aec-6b09-47ab-926d-e83b8c36317f",
+            "name": "Lotto Texas",
+            "price": 1.0,
+            "desc": "Pick 5 numbers from 1-50. Texas\u0027s own lottery game with weekly Saturday draws.",
+            "imgSrc": "lottotexas.png",
+            "active": true
+          }
+        ],
+        "total": 1.0,
+        "purchaseDate": "2026-04-27"
+      }
+    ]
+  },
+  {
+    "name": "Deo Mwala",
+    "email": "deosgracius17@gmail.com",
+    "phone": "12174174270",
+    "address": "3710 Erskine Street",
+    "birthday": "2000-06-22",
+    "sex": "Male",
+    "last4SSN": "2222",
+    "last4ID": "3333",
+    "role": "USER",
+    "salt": "d1418b66643a45bc80d4decf73cff970",
+    "pwHash": "5a437080cd87c37f187ad6ef256a79a88aea073dfc2cb19a776aca6f0c22f0c2",
+    "orders": [
+      {
+        "id": "05405b2f-5d68-49c3-989b-12db762821b2",
+        "userEmail": "deosgracius17@gmail.com",
+        "quantity": 1,
+        "tickets": [
+          {
+            "numbers": [
+              8,
+              12,
+              45,
+              31,
+              22
+            ],
+            "winning": false,
+            "resolved": false,
+            "claimed": false,
+            "prizeAmount": 0.0,
+            "ticketType": "Powerball",
+            "confirmationNumber": "63E34A9E",
+            "id": "c39c9511-4651-4eb6-831e-718065467b90",
+            "name": "Powerball",
+            "price": 2.0,
+            "desc": "Pick 5 numbers from 1-50. Drawings every Saturday. Jackpot starts at $20 million!",
+            "imgSrc": "powerball.png",
+            "active": true
+          }
+        ],
+        "total": 2.0,
+        "purchaseDate": "2026-04-27"
+      }
+    ]
+  }
+]

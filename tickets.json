@@ -1,0 +1,34 @@
+[
+  {
+    "id": "c39c9511-4651-4eb6-831e-718065467b90",
+    "name": "Powerball",
+    "price": 2.0,
+    "desc": "Pick 5 numbers from 1-50. Drawings every Saturday. Jackpot starts at $20 million!",
+    "imgSrc": "powerball.png",
+    "active": true
+  },
+  {
+    "id": "dbae8ff7-0421-4dea-8e24-42ea4f31edc6",
+    "name": "Mega Millions",
+    "price": 2.0,
+    "desc": "Pick 5 numbers from 1-50. Drawings every Saturday. Starting jackpot of $40 million!",
+    "imgSrc": "megamillions.png",
+    "active": true
+  },
+  {
+    "id": "943e6aec-6b09-47ab-926d-e83b8c36317f",
+    "name": "Lotto Texas",
+    "price": 1.0,
+    "desc": "Pick 5 numbers from 1-50. Texas\u0027s own lottery game with weekly Saturday draws.",
+    "imgSrc": "lottotexas.png",
+    "active": true
+  },
+  {
+    "id": "c0c5d55c-cc05-476d-b9ee-1688e3dbe5d3",
+    "name": "Texas Two Step",
+    "price": 1.5,
+    "desc": "Pick 5 numbers from 1-50. Two chances to win every Saturday draw!",
+    "imgSrc": "texastwostep.png",
+    "active": true
+  }
+]
