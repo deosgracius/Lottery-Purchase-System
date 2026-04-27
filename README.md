@@ -274,19 +274,18 @@ Then restart the server.
 
 ## 👥 Team — Group 3
 
-| Name | Email | Role |
-|------|-------|------|
-| Raj Patel | pat05814@ttu.edu | Backend |
-| Cole Daniel | dan20645@ttu.edu | Backend |
-| Deo Mwala | demwala@ttu.edu | Full Stack |
-| Justin Furnas | jfurnas@ttu.edu | Frontend |
-| Osman Sen | osen@ttu.edu | Backend |
+| Name | Role |
+|------|------|
+| Raj Patel | Backend |
+| Cole Daniel  | Backend |
+| Deo Mwala | Full Stack |
+| Osman Sen | Backend |
 
 ---
 
 ## 📚 Course Information
 
-**Course:** CS3365 — Software Engineering  
+**Course:**  Software Engineering  
 **Institution:** Texas Tech University  
 
 
