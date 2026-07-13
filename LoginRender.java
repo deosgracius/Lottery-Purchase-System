@@ -62,8 +62,8 @@ public class LoginRender {
         </div>
         <script>
             const p = new URLSearchParams(window.location.search), b = document.getElementById('alert-box');
-            if (p.get('error')) b.innerHTML = '<div class="alert alert-error">' + decodeURIComponent(p.get('error')) + '</div>';
-            if (p.get('success')) b.innerHTML = '<div class="alert alert-success">' + decodeURIComponent(p.get('success')) + '</div>';
+            if (p.get('error')) { var d=document.createElement('div'); d.className='alert alert-error'; d.textContent=decodeURIComponent(p.get('error')); b.appendChild(d); }
+            if (p.get('success')) { var d=document.createElement('div'); d.className='alert alert-success'; d.textContent=decodeURIComponent(p.get('success')); b.appendChild(d); }
         </script>
         </body></html>""";
     }
@@ -102,7 +102,7 @@ public class LoginRender {
         </div>
         <script>
             const p = new URLSearchParams(window.location.search), b = document.getElementById('alert-box');
-            if (p.get('error')) b.innerHTML = '<div class="alert alert-error">' + decodeURIComponent(p.get('error')) + '</div>';
+            if (p.get('error')) { var d=document.createElement('div'); d.className='alert alert-error'; d.textContent=decodeURIComponent(p.get('error')); b.appendChild(d); }
 
             function checkAge() {
                 const dob = new Date(document.getElementById('birthday').value);
@@ -143,8 +143,8 @@ public class LoginRender {
         </div>
         <script>
             const p = new URLSearchParams(window.location.search), b = document.getElementById('alert-box');
-            if (p.get('error'))   b.innerHTML = '<div class="alert alert-error">'   + decodeURIComponent(p.get('error'))   + '</div>';
-            if (p.get('success')) b.innerHTML = '<div class="alert alert-success">' + decodeURIComponent(p.get('success')) + '</div>';
+            if (p.get('error')) { var d=document.createElement('div'); d.className='alert alert-error'; d.textContent=decodeURIComponent(p.get('error')); b.appendChild(d); }
+            if (p.get('success')) { var d=document.createElement('div'); d.className='alert alert-success'; d.textContent=decodeURIComponent(p.get('success')); b.appendChild(d); }
         </script>
         </body></html>""";
     }

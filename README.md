@@ -294,3 +294,13 @@ Then restart the server.
 ## 📄 License
 
 This project was developed for educational purposes as part of Software Engineering Class at Texas Tech University.
+
+---
+
+## Project Status & Limitations
+
+This is an academic project (Software Engineering course). Intended scope and known limitations:
+
+- **Payment is simulated.** `PaymentProcessor` does not connect to a real payment gateway; it validates inputs and approves the transaction. Integrating a real provider (e.g. Stripe) is future work.
+- **File-based persistence.** Data is stored in JSON files (`tickets.json` ships as seed data; `users.json`/`orders.json` are generated at runtime and are not tracked). This suits a single-instance demo but is not production-grade — a real deployment would use a database.
+- **Not affiliated with the Texas Lottery Commission.** Built as a coursework exercise.
