@@ -1,3 +1,5 @@
+package com.deomwala.lps;
+
 public class LoginRender {
 
     private static final String STYLE = """

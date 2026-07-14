@@ -1,3 +1,5 @@
+package com.deomwala.lps;
+
 import java.util.*;
 import static spark.Spark.*;
 
@@ -37,9 +39,15 @@ public class ServerBackend {
         Map<String, Object> config = new HashMap<>();
         config.put("host",     "smtp.gmail.com");
         config.put("port",     587);
-        config.put("user",     "YOUR_GMAIL@gmail.com");      // <-- replace with your Gmail
-        config.put("password", "YOUR_APP_PASSWORD");          // <-- replace with Gmail App Password
-        config.put("from",     "YOUR_GMAIL@gmail.com");      // <-- same Gmail
+        String smtpUser = System.getenv("SMTP_USER");
+        String smtpPass = System.getenv("SMTP_PASSWORD");
+        if (smtpUser != null && smtpPass != null) {
+            config.put("user", smtpUser);
+            config.put("password", smtpPass);
+            String from = System.getenv("SMTP_FROM");
+            config.put("from", from != null ? from : smtpUser);
+        }
+        // No SMTP_USER/SMTP_PASSWORD env vars set -> EmailNotifier logs emails instead of sending.
         return config;
     }
 

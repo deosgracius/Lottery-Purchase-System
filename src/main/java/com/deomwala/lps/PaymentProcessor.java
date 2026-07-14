@@ -1,3 +1,5 @@
+package com.deomwala.lps;
+
 import java.util.Map;
 
 public class PaymentProcessor {

@@ -1,5 +1,7 @@
 # Project Description — Lottery Purchase System (LPS)
 
+[![CI](https://github.com/deosgracius/Lottery-Purchase-System/actions/workflows/ci.yml/badge.svg)](https://github.com/deosgracius/Lottery-Purchase-System/actions/workflows/ci.yml)
+
 ## Overview
 
 The **Lottery Purchase System (LPS)** is a web-based platform developed for the Texas Lottery Commission that enables customers to purchase and manage lottery tickets entirely online. The system eliminates the need to visit a physical retail location by providing a complete digital experience — from account registration and ticket purchasing to result checking and prize claiming.
@@ -304,3 +306,29 @@ This is an academic project (Software Engineering course). Intended scope and kn
 - **Payment is simulated.** `PaymentProcessor` does not connect to a real payment gateway; it validates inputs and approves the transaction. Integrating a real provider (e.g. Stripe) is future work.
 - **File-based persistence.** Data is stored in JSON files (`tickets.json` ships as seed data; `users.json`/`orders.json` are generated at runtime and are not tracked). This suits a single-instance demo but is not production-grade — a real deployment would use a database.
 - **Not affiliated with the Texas Lottery Commission.** Built as a coursework exercise.
+
+---
+
+## Build, Test & Run
+
+Requires **JDK 21** and **Maven**.
+
+```bash
+mvn test        # run the JUnit test suite
+mvn package     # build a runnable fat JAR -> target/lottery-purchase-system.jar
+java -jar target/lottery-purchase-system.jar   # serves http://localhost:4567
+```
+
+### Email configuration (optional)
+
+Email sending is disabled unless SMTP credentials are supplied via environment
+variables (otherwise messages are logged instead of sent):
+
+```bash
+export SMTP_USER="you@gmail.com"
+export SMTP_PASSWORD="your-gmail-app-password"   # never hard-coded or committed
+export SMTP_FROM="you@gmail.com"                 # optional, defaults to SMTP_USER
+```
+
+Every push and pull request is built and tested on GitHub Actions
+(`.github/workflows/ci.yml`).

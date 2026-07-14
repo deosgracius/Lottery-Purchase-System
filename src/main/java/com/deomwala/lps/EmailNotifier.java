@@ -1,3 +1,5 @@
+package com.deomwala.lps;
+
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 
