@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/deosgracius/Lottery-Purchase-System/actions/workflows/ci.yml/badge.svg)](https://github.com/deosgracius/Lottery-Purchase-System/actions/workflows/ci.yml)
 
+**Live demo:** https://lottery-purchase-system.fly.dev/
+
 A full-stack web application that lets customers register, purchase, manage, and claim
 lottery tickets entirely online — no retail visit required. Built with **Java 21** and the
 **Spark** micro-framework for CS 3365 (Software Engineering) at Texas Tech University.
@@ -94,6 +96,29 @@ export SMTP_USER="you@gmail.com"
 export SMTP_PASSWORD="your-gmail-app-password"
 export SMTP_FROM="you@gmail.com"        # optional, defaults to SMTP_USER
 ```
+
+## Deployment
+
+The app is container-ready and configured entirely through environment variables:
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `PORT` | HTTP port to bind | `4567` |
+| `APP_BASE_URL` | Absolute base URL used in emailed links | `http://localhost:4567` |
+| `DATA_DIR` | Directory for the JSON data files | `.` |
+| `SMTP_USER` / `SMTP_PASSWORD` / `SMTP_FROM` | Gmail SMTP (optional) | unset → emails logged |
+
+```bash
+# Docker
+docker build -t lps .
+docker run -p 8080:8080 -e PORT=8080 -e DATA_DIR=/data -v lps_data:/data lps
+
+# Fly.io (config in fly.toml; /data is a persistent volume)
+flyctl deploy
+```
+
+A `GET /health` endpoint (`{"status":"ok"}`) is exposed for load-balancer / uptime checks.
+The live demo runs on Fly.io with a persistent volume so data survives redeploys.
 
 ## Design notes & limitations
 
