@@ -29,11 +29,13 @@ public class ServerBackend {
     }
 
     public ServerBackend() {
-        this(".", "users.json", "tickets.json", "orders.json", "email.log", buildSmtpConfig());
+        this(System.getenv().getOrDefault("DATA_DIR", "."),
+                "users.json", "tickets.json", "orders.json", "email.log", buildSmtpConfig());
     }
 
     // ---------------------------------------------------------------
-    // *** CONFIGURE YOUR GMAIL HERE ***
+    // SMTP config is read from the environment (SMTP_USER / SMTP_PASSWORD /
+    // SMTP_FROM). If unset, EmailNotifier logs emails instead of sending.
     // ---------------------------------------------------------------
     private static Map<String, Object> buildSmtpConfig() {
         Map<String, Object> config = new HashMap<>();
@@ -115,14 +117,22 @@ public class ServerBackend {
     // ---------------------------------------------------------------
     private void setupRoutes() {
 
+        // Bind host/port from the environment so the app runs under any host (Fly, Render, Docker).
+        port(Integer.parseInt(System.getenv().getOrDefault("PORT", "4567")));
+        ipAddress("0.0.0.0");
+
         before((req, res) -> {
             String path = req.pathInfo(), email = req.session().attribute("email");
             UserType role = req.session().attribute("role");
             boolean isPublic = path.equals("/login") || path.equals("/register")
-                    || path.equals("/forgot-password") || path.equals("/reset-password") || path.equals("/");
+                    || path.equals("/forgot-password") || path.equals("/reset-password")
+                    || path.equals("/") || path.equals("/health");
             if (!isPublic && email == null) { res.redirect("/login"); halt(); }
             if (path.startsWith("/admin") && role != UserType.ADMIN) { res.redirect("/dashboard"); halt(); }
         });
+
+        // Liveness probe for load balancers / uptime checks.
+        get("/health", (req, res) -> { res.type("application/json"); return "{\"status\":\"ok\"}"; });
 
         get("/", (req, res) -> {
             res.redirect(req.session().attribute("email") != null ? "/dashboard" : "/login"); return null;
@@ -168,7 +178,8 @@ public class ServerBackend {
             String email = req.queryParams("email");
             String token = userMan.generateResetToken(email);
             if (token != null) {
-                String link = "http://localhost:4567/reset-password?token=" + token;
+                String base = System.getenv().getOrDefault("APP_BASE_URL", "http://localhost:4567");
+                String link = base + "/reset-password?token=" + token;
                 notifMan.sendEmail(
                         email,
                         "LPS — Reset Your Password 🔐",
@@ -392,7 +403,7 @@ public class ServerBackend {
 
     public static void main(String[] args) {
         ServerBackend backend = new ServerBackend();
-        System.out.println("Server running at http://localhost:4567");
+        System.out.println("Server running on port " + System.getenv().getOrDefault("PORT", "4567"));
         System.out.println("Tickets: " + backend.ticketMan.listTickets().size() +
                 "  Users: " + backend.userMan.users.size());
         backend.setupRoutes();

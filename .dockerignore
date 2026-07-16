@@ -1,0 +1,9 @@
+target/
+.git/
+.github/
+.idea/
+*.iml
+users.json
+orders.json
+email.log
+*.md
